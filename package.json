@@ -8,9 +8,11 @@
     "build": "tsc",
     "test": "jest",
     "lint": "eslint . --ext .ts",
+    "spark:start": "ts-node src/pipeline/dataProcessor.ts",
     "kafka:start": "./scripts/start-kafka.sh"
   },
   "dependencies": {
+    "axios": "^1.7.8",
     "dotenv": "^10.0.0",
     "kafkajs": "^2.1.0",
     "winston": "^3.3.3"
