@@ -3,7 +3,7 @@ import { Partitioners } from 'kafkajs';
 import { kafka } from '../config/kafka';
 import { Message } from '../models/message';
 
-export class MessageProducer {
+export class DataProducer {
   private producer = kafka.producer({
     createPartitioner: Partitioners.DefaultPartitioner
   });
@@ -27,18 +27,18 @@ export class MessageProducer {
 // -------------------------------------------------------- PRODUCER: Message-Event -- //
 // -------------------------------------------------------- ----------------------- -- //
 
-export async function messageEventPush(eventTopic:string, eventContent:string) {
+export async function dataEventPush(eventTopic:string, eventContent:string) {
  
-  const producer = new MessageProducer();
+  const producer = new DataProducer();
   await producer.connect();
 
-  const eventMessage = {
+  const eventData = {
     id: Date.now().toString(),
     content: eventContent,
     timestamp: Date.now(),
   };
 
-  await producer.publishMessage(eventTopic, eventMessage);
+  await producer.publishMessage(eventTopic, eventData);
   console.log('Message-Event Push');
   await producer.disconnect();
 

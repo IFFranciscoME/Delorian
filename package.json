@@ -8,13 +8,19 @@
     "build": "tsc",
     "test": "jest",
     "lint": "eslint . --ext .ts",
-    "spark:start": "ts-node src/pipeline/dataProcessor.ts",
     "kafka:start": "./scripts/start-kafka.sh"
   },
   "dependencies": {
+    "@aave/contract-helpers": "^1.30.5",
+    "@aave/math-utils": "^1.30.5",
+    "@bgd-labs/aave-address-book": "^4.6.0",
+    "@types/pg": "^8.11.10",
     "axios": "^1.7.8",
+    "dayjs": "^1.11.13",
     "dotenv": "^10.0.0",
+    "ethers": "^5.7.2",
     "kafkajs": "^2.1.0",
+    "pg": "^8.13.1",
     "winston": "^3.3.3"
   },
   "devDependencies": {

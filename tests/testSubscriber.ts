@@ -1,5 +1,6 @@
-import { MessageConsumer } from './consumers/messageConsumer';
-import { Message } from './models/message';
+
+import { MessageConsumer } from '../src/consumers/messageConsumer';
+import { Message } from '../src/models/message';
 
 async function testSubscribe() {
   const consumer = new MessageConsumer();

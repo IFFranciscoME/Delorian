@@ -1,6 +1,8 @@
-import { MessageProducer } from './producers/messageProducer';
+
+import { MessageProducer } from '../src/producers/messageProducer';
 
 async function testPublish() {
+ 
   const producer = new MessageProducer();
   await producer.connect();
 

@@ -14,12 +14,12 @@ then
     exit 1
 fi
 
-# Start Kafka using Docker Compose
+# Start Kafka, ZooKeeper and PostgreSQL Instance using Docker Compose
 docker-compose up -d
 
 # Wait for Kafka to be ready
 echo "Waiting for Kafka to be ready..."
 sleep 20
 
-echo "Kafka is now running."
+echo "Stack is now active and running"
 

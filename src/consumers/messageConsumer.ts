@@ -6,6 +6,7 @@ import { Message } from '../models/message';
 import { logger } from '../utils/logger';
 
 export class MessageConsumer {
+
   private consumer = kafka.consumer({ groupId: 'test-group' });
 
   async connect() {
@@ -19,15 +20,46 @@ export class MessageConsumer {
   async subscribe(topic: string, messageHandler: (message: Message) => void) {
     
     await this.consumer.subscribe({ topic, fromBeginning: true });
+    
     await this.consumer.run({
       
       eachMessage: async ({ topic, partition, message }: EachMessagePayload) => {
         const messageValue: Message = JSON.parse(message.value?.toString() || '{}');
-        logger.info('Received message', { topic, partition, offset: message.offset, message: messageValue });
-        messageHandler(messageValue);
-      },
+        
+        logger.info('Received message: ', {
+          topic,
+          partition,
+          messageValue,
+        });
 
+        messageHandler(messageValue);
+     
+      },
     });
   }
 
 }
+
+// -------------------------------------------------------- CONSUMER: Message-Event -- //
+// -------------------------------------------------------- ----------------------- -- //
+
+export async function messageEventPull(eventTopic:string) {
+
+  const consumer = new MessageConsumer();
+  
+  try {
+
+    await consumer.connect();
+    
+    const messageHandler = (message: Message) => {
+      console.log('Message-Event Pull:', message);
+    };
+    
+    await consumer.subscribe(eventTopic, messageHandler);
+  
+  } catch (error) {
+    console.error('Error in consumer:', error);
+  }
+
+}
+

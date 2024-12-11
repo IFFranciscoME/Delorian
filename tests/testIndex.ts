@@ -1,7 +1,8 @@
+
 // src/index.ts
-import { MessageProducer } from './producers/messageProducer';
-import { MessageConsumer } from './consumers/messageConsumer';
-import { logger } from './utils/logger';
+import { MessageProducer } from '../src/producers/messageProducer';
+import { MessageConsumer } from '../src/consumers/messageConsumer';
+import { logger } from '../src/utils/logger';
 
 async function main() {
   const producer = new MessageProducer();
@@ -11,11 +12,10 @@ async function main() {
     
     await producer.connect();
     await consumer.connect();
-    await consumer.subscribe('test-topic');
 
     // Example: Publish a message every 5 seconds
     setInterval(async () => {
-      
+     
       const message = {
         id: Date.now().toString(),
         content: 'Hello, Kafka!',
@@ -31,8 +31,6 @@ async function main() {
   } catch (error) {
     logger.error('Error in main function', { error });
   }
-
 }
 
 main();
-
