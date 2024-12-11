@@ -25,7 +25,10 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
   
   postgres:
-    image: postgres:latest
+    #image: postgres:latest
+    build:
+      context: .
+      dockerfile: postgreSQL.Dockerfile
     environment:
       POSTGRES_DB: datalake
       POSTGRES_USER: user_1

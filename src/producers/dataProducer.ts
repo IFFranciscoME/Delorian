@@ -1,6 +1,7 @@
 
 import { Partitioners } from 'kafkajs';
 import { kafka } from '../config/kafka';
+import { UserMetrics } from '../models/data';
 import { Message } from '../models/message';
 
 export class DataProducer {
@@ -16,25 +17,26 @@ export class DataProducer {
     await this.producer.disconnect();
   }
 
-  async publishMessage(topic: string, message: Message) {
+  async publishMessage(topic: string, message: Message): Promise<void> {
     await this.producer.send({
       topic,
       messages: [{ value: JSON.stringify(message) }],
     });
-  }
+  }  
 }
 
 // -------------------------------------------------------- PRODUCER: Message-Event -- //
 // -------------------------------------------------------- ----------------------- -- //
 
-export async function dataEventPush(eventTopic:string, eventContent:string) {
+export async function dataEventPush(eventTopic:string, eventContent:UserMetrics) {
  
   const producer = new DataProducer();
   await producer.connect();
 
-  const eventData = {
+  // Wrap UserMetrics into a Message object
+  const eventData: Message = {
     id: Date.now().toString(),
-    content: eventContent,
+    content: JSON.stringify(eventContent), // Serialize UserMetrics as a string
     timestamp: Date.now(),
   };
 

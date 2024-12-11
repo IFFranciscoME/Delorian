@@ -9,7 +9,7 @@ const wsProvider = new ethers.providers.WebSocketProvider(infura);
 wsProvider.on('block', async (blockNumber) => {
 
   console.log(`\n------ ------------------------------------------------ ------ `);
-  console.log(`------ Producer: [Message-Event] New Minted Block: ${blockNumber} ------ `);
+  console.log(`------ Producer: [Message-Event] New Minted Block: ${blockNumber} -- `);
   console.log(`------ ------------------------------------------------ ------\n`);
   
   // Message-Event Push to Topic

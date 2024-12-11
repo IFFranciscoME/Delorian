@@ -1,8 +1,8 @@
 
 import { messageEventPull } from '../consumers/messageConsumer';
-import { parsedData } from '../pipeline/dataFetcher';
-// import { dataEventPush } from '../producers/dataProducer';
-import { connectAndQueryPostgres } from '../pipeline/dataExporter';
+import { dataEventPush } from '../producers/dataProducer';
+import { parsedData } from '../pipeline/dataParser';
+import { insertUserMetrics } from '../pipeline/dataExporter';
 
 const aaveTopic = 'LendingActivity';
 
@@ -16,25 +16,21 @@ const aaveTopic = 'LendingActivity';
       // Message-Event Pull from Topic
       await messageEventPull(aaveTopic);
       
-      // Fetch Pool Data
-      //const pool_data = await fetchPoolData();
-      
-      // Fetch Users Data
-      //const users_data = await fetchUsersData();
+      // Fetch Pool Data, Fetch Users Data, Parse Data
+      const metricsData = await parsedData();
 
-      // Parse into Schema
-      // (pending)
-      const parsed_data = await parsedData();
-
-      // Data-Event Push
-      // await dataEventPush(aaveTopic, parsed_data);
+      // Data-Event Push to Topic
+      await dataEventPush(aaveTopic, metricsData)
     
-      // Log results for testing purposes
-      //console.log('pool_data', pool_data);
-      //console.log('users_data', users_data);
-      console.log('\n ---- parsed_data ---- \n', parsed_data);
+      // Data-Event Push to Topic
+      //await dataEventPull(aaveTopic)
+      
+      // Insert Parsed Data
+      await insertUserMetrics(metricsData)
+    
+      // Message
+      console.log('\n ---- metricsData ---- \n', metricsData);
 
-      connectAndQueryPostgres();
     
     } catch (error) {
 

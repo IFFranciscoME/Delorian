@@ -2,36 +2,6 @@
 
 Assemble DeFi Data Artifacts Based on Delta in Time Approach.
 
-## Project Structure
-
-```
-delorian/
-│ 
-├── scripts/
-│   └── start-service.sh
-│ 
-├── src/
-│   ├── config/
-│   │   └── kafka.ts
-│   ├── consumers/
-│   │   └── messageConsumer.ts
-│   ├── models/
-│   │   └── message.ts
-│   ├── producers/
-│   │   └── messageProducer.ts
-│   ├── utils/
-│   │   └── logger.ts
-│   ├── testPublisher.ts
-│   │── testSubscriber.ts
-│   └── index.ts
-│ 
-├── .gitignore
-├── docker-compose.yml
-├── package.json
-├── tsconfig.json
-└── README.md
-```
-
 ## Architecture
 
 ```mermaid
@@ -52,7 +22,8 @@ Connector-RPC ->> Channel: Message-Event Pull
 par Extract
 	Connector-RPC --> Connector-RPC: Fetch Pool Data
 	Connector-RPC --> Connector-RPC: Fetch Users Data
-	Connector-RPC --> Connector-RPC: Parse Into Schema
+	Connector-RPC --> Connector-RPC: Parse Data
+	Connector-RPC --> Connector-RPC: Insert Parsed Data
 end
 
 Note over Connector-RPC : [Data-Event] <br/> New Raw Dataset
@@ -75,21 +46,21 @@ Job-ETL ->> Channel: Message Event Push
 
 ## Usage
 
-1. Start kafka server
+1. Build infrastructure docker 
 
 ```
-./scripts/start-kafka.sh
+./scripts/build-service.sh
 ```
 
-2. build docker kafka (server), zookeeper (manager), delorian (connectors) with compose
+2. Run WebSocket connector
 
-```
-docker-compose up --build
+```shell
+npx ts-node connector_websocket.ts
 ```
 
-3. Run scripts as example
+3. Run JSON-RPC connector
 
-```
+```shell
 npx ts-node connector_websocket.ts
 ```
 
@@ -121,9 +92,14 @@ npm install pg @types/pg
 
 ## Roadmap
 
-- Include a data-pipeline with a Fetcher and a Exporter
-- Include a data-lake with an SQL instance
-- Include some rust-code for data transformations as a PoC MLOps ETL
-- Include a data-warehouse with an SQL instance
 - Include testing with [ts-jtest](https://kulshekhar.github.io/ts-jest/docs/)
+
+Create a Risk Metric based on Hawkes point process, in order to provide the probability of observing a cluster of liquidations. Rust, docker, shell, clickhouseDB.
+
+- Part 1 : A data reader (historical batches) from the postgreSQL DB, to then store them as calibration data into a Clickhouse DB
+- Part 2 : Definition of the model, parameters and its calibration process.
+- Part 3 : Atelier container for execution of the calibration, versioning and storage of calibration results into ClickhouseDB.
+- Part 4 : A clickhouse DB Instance within a container in the server.
+- Part 5 : Streaming of risk metric: Probability of observing a Cluster of liquidations.
+- Part 6 : Publish metric into a blockchain using a smart contract.
 

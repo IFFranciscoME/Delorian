@@ -1,6 +1,10 @@
 // src/models/data.ts
-export interface Data {
-  id: string;
-  content: string;
-  timestamp: number;
+
+// Define the interface for the metrics data
+export interface UserMetrics {
+  collateral: string;
+  borrowed: string;
+  health_index: string;
+  status: string;
 }
+
