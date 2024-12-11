@@ -63,6 +63,10 @@ npx ts-node connector_websocket.ts
 npx ts-node connector_websocket.ts
 ```
 
+## Deployment
+
+This functionality is going to be deployed as with the Infrastructure build with a variation of the [Astronomer](https://github.com/IFFranciscoME/astronomer) project.
+
 ## Dependencies
 
 The aave library has a peer dependency of ehters on its v5, and it wont work with v6
