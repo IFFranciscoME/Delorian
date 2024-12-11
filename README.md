@@ -23,7 +23,6 @@ par Extract
 	Connector-RPC --> Connector-RPC: Fetch Pool Data
 	Connector-RPC --> Connector-RPC: Fetch Users Data
 	Connector-RPC --> Connector-RPC: Parse Data
-	Connector-RPC --> Connector-RPC: Insert Parsed Data
 end
 
 Note over Connector-RPC : [Data-Event] <br/> New Raw Dataset
@@ -31,8 +30,8 @@ Connector-RPC ->> Channel: Data-Event Push
 Job-ETL ->> Channel: Data-Event Pull
 
 par Transform
-	Job-ETL --> Job-ETL: Calculate & <br/>  Calculate Metrics
-	Job-ETL --> Job-ETL: Calculate & <br/>  Aggregate Data
+	Job-ETL --> Job-ETL: Calculate & <br/> Metrics
+	Job-ETL --> Job-ETL: Aggregate & <br/> Data
 end
 
 par Load

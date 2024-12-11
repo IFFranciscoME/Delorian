@@ -22,11 +22,11 @@ const aaveTopic = 'LendingActivity';
       // Data-Event Push to Topic
       await dataEventPush(aaveTopic, metricsData)
     
-      // Data-Event Push to Topic
+      // Data-Event Push from Topic
       //await dataEventPull(aaveTopic)
       
       // Insert Parsed Data
-      await insertUserMetrics(metricsData)
+      // await insertUserMetrics(metricsData)
     
       // Message
       console.log('\n ---- metricsData ---- \n', metricsData);
