@@ -67,6 +67,8 @@ npx ts-node connector_websocket.ts
 
 This functionality is going to be deployed as with the Infrastructure build with a variation of the [Astronomer](https://github.com/IFFranciscoME/astronomer) project.
 
+And for the 
+
 ## Dependencies
 
 The aave library has a peer dependency of ehters on its v5, and it wont work with v6
@@ -100,7 +102,7 @@ npm install pg @types/pg
 Create a Risk Metric based on Hawkes point process, in order to provide the probability of observing a cluster of liquidations. Rust, docker, shell, clickhouseDB.
 
 - Part 1 : A data reader (historical batches) from the postgreSQL DB, to then store them as calibration data into a Clickhouse DB
-- Part 2 : Definition of the model, parameters and its calibration process.
+- Part 2 : Definition of the model, parameters and its calibration process. Which is going to be a Multivariate Hawkes Process for Self-exciting point process, as a variation of this rust based implementation [atelier::generators/hawkes.rs](https://github.com/IteraLabs/atelier/blob/main/atelier/src/generators/hawkes.rs) of expected arrival of events, in this case, Liquidation Events. 
 - Part 3 : Atelier container for execution of the calibration, versioning and storage of calibration results into ClickhouseDB.
 - Part 4 : A clickhouse DB Instance within a container in the server.
 - Part 5 : Streaming of risk metric: Probability of observing a Cluster of liquidations.
